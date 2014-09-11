@@ -1,14 +1,16 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Nice</title>
+    <title>eventCountdown.js Example - By Jake LeBoeuf</title>
     <link href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="../lib/css/prism.css" rel="stylesheet" />
   </head>
   <body>
 
     <div class="container">
       <div class="row">
         <div class="col-md-12">
+          <br/>
           <h2>Event Countdown Example</h2>
         </div>
       </div>
@@ -16,7 +18,7 @@
         <div class="col-md-4">
           <h3>Output</h3>
           <div event-countdown class="countdown" calendar-id="_e41ot4viu5u61ejac8ra38u1eo" api-key="AIzaSyB-x4u1r1y3KlUW4AA0BPnCFoAYxOTyBjY">
-            <p>The next event in your calendar is titled <span ec-name>loading</span>, and it starts <span ec-countdown>loading...</span></p>
+            <p>The next event in your calendar is titled <span ec-name>loading</span>, and it starts <span ec-countdown>loading...</span>.</p>
             <ul>
               <li><a href="#" ec-link>Add to Calendar</a></li>
               <li>Address: <span ec-location>loading...</span></li>
@@ -28,18 +30,21 @@
         </div>
         <div class="col-md-8">
           <h3>Source</h3>
-          <pre>
-  &lt;div event-countdown class="countdown" calendar-id="_e41ot4viu5u61ejac8ra38u1eo" api-key="AIzaSyB-x4u1r1y3KlUW4AA0BPnCFoAYxOTyBjY"&gt;
-    &lt;pw&gt;The next event in your calendar is titled &lt;span ec-name&gt;loading&lt;/span&gt;, and it starts &lt;span ec-countdown&gt;loading...&lt;/span&gt;&lt;/p&gt;
-    &lt;ul&gt;
-      &lt;li&gt;&lt;a href="#" ec-link&gt;Add to Calendar&lt;/a&gt;&lt;/li&gt;
-      &lt;li&gt;Address: &lt;span ec-location&gt;loading...&lt;/span&gt;&lt;/li&gt;
-      &lt;li&gt;Stagts: &lt;time ec-stagt&gt;loading...&lt;/time&gt;&lt;/li&gt;
-      &lt;li&gt;Ends: &lt;span ec-end&gt;loading...&lt;/span&gt;&lt;/li&gt;
-      &lt;li&gt;Current Time: &lt;span ec-now&gt;loading...&lt;/span&gt;&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/div&gt;
-          </pre>
+          <pre><code class="language-markup">&lt;!-- Include JS --&gt;
+&lt;script src="../lib/jquery.min.js"&gt;&lt;/script&gt;
+&lt;script src="../lib/moment.min.js"&gt;&lt;/script&gt;
+&lt;script src="../lib/eventCountdown.js"&gt;&lt;/script&gt;
+
+&lt;div class="countdown" event-countdown calendar-id="_e41ot4viu5u61ejac8ra38u1eo" api-key="AIzaSyB-x4u1r1y3KlUW4AA0BPnCFoAYxOTyBjY"&gt;
+  &lt;p&gt;The next event in your calendar is titled &lt;span ec-name&gt;loading&lt;/span&gt;, and it starts &lt;span ec-countdown&gt;loading...&lt;/span&gt;&lt;/p&gt;
+  &lt;ul&gt;
+    &lt;li&gt;&lt;a href="#" ec-link&gt;Add to Calendar&lt;/a&gt;&lt;/li&gt;
+    &lt;li&gt;Address: &lt;span ec-location&gt;loading...&lt;/span&gt;&lt;/li&gt;
+    &lt;li&gt;Stagts: &lt;time ec-stagt&gt;loading...&lt;/time&gt;&lt;/li&gt;
+    &lt;li&gt;Ends: &lt;span ec-end&gt;loading...&lt;/span&gt;&lt;/li&gt;
+    &lt;li&gt;Current Time: &lt;span ec-now&gt;loading...&lt;/span&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/div&gt;</code></pre>
         </div>
       </div>
     </div>
@@ -47,6 +52,7 @@
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
     <script src="http://cdnjs.cloudflare.com/ajax/libs/moment.js/2.8.2/moment.min.js"></script>
     <script src="../src/eventCountdown.js"></script>
+    <script src="../lib/js/prism.js"></script>
   </body>
 </html>
 
