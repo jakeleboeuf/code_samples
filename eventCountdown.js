@@ -8,7 +8,7 @@
 // This code sample uses the Google Calendar API to request event info
 // and display a pretty countdown on the page. It is fast, lightweight
 // and really easy to set up.
-
+// Depends on jQuery and moment.js
 
 /**
  * @eventCountdown method
@@ -30,6 +30,10 @@
  * For a list of available attributes, check the project readme.
  * github.com/jakeleboeuf/portfolio/code_samples/README.md
  *
+ * Example:
+ * <script src="/jquery.min.js" />
+ * <script src="/moment.min.js" />
+ * <script src="/eventCountdown.js" />
  * <div event-countdown calendar-id="jfa04ru00fa9f39jf09afj309jf3" api-key="RofmOwI802J8dq0">
  *   <p>The next event is <a href="/" ec-name ec-link>loading...</a> and starts <span ec-countdown>loading...</span></p>
  *   <p>Address: <span ec-location>loading...</span>
