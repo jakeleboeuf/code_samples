@@ -43,7 +43,7 @@
 
 // Lets get this party started
 (function(){
-  var countInterval = 6e3; // 1 minute
+  var countInterval = 1e3; // 1 minute
 
   // When the DOM is ready to party
   $(document).ready(function() {
@@ -77,7 +77,8 @@
 
         calInfo.nextStream = new Date(response.items[0].start.dateTime);
         calInfo.nextStreamEnd = new Date(response.items[0].end.dateTime);
-        calInfo.where = response.items[0].summary;
+        calInfo.name = response.items[0].summary;
+        calInfo.location = response.items[0].location;
         calInfo.link = response.items[0].htmlLink;
         calInfo.now = new Date();
 
@@ -100,10 +101,13 @@
   // pretty 'time until' style response
   function updateCountdown(data) {
     $('[ec-link]').attr('href', data.link);
-    $('[ec-name]').html(data.where);
+    $('[ec-name]').html(data.name);
+    $('[ec-location]').html(data.location);
     $('[ec-countdown]').html(moment(data.nextStream).fromNow());
-    $('[ec-start]').html(moment(data.nextStream));
-    $('[ec-end]').html(moment(data.nextStreamEnd));
+    $('[ec-start]').html(moment(data.nextStream).format('MMMM Do @ h:mm:ss a'));
+    $('[ec-end]').html(moment(data.nextStreamEnd).format('MMMM Do @ h:mm:ss a'));
+    $('[ec-now]').html(moment().format('MMMM Do @ h:mm:ss a'));
+    console.log(data.nextStream);
   };
 
 })();
