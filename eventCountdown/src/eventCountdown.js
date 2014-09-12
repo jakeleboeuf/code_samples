@@ -61,17 +61,17 @@
       scope.each(function(i) {
         // Set up scoped vars
         var calendarId = $(scope[i]).attr('calendar-id'),
-        googleApiKey = $(scope[i]).attr('api-key'),
+          googleApiKey = $(scope[i]).attr('api-key'),
 
-        // Set up API path
-        apiPath = [
-          "https://www.googleapis.com/calendar/v3/calendars/unitedpursuit.com",
-          calendarId,
-          "%40group.calendar.google.com/events?orderBy=startTime&singleEvents=true&timeMin=",
-          curTime,
-          "&key=",
-          googleApiKey
-        ].join("\n");
+          // Set up API path
+          apiPath = [
+            "https://www.googleapis.com/calendar/v3/calendars/unitedpursuit.com",
+            calendarId,
+            "%40group.calendar.google.com/events?orderBy=startTime&singleEvents=true&timeMin=",
+            curTime,
+            "&key=",
+            googleApiKey
+          ].join("\n");
 
         // Some bad error checking...
         if(!calendarId) {
@@ -81,7 +81,7 @@
         if(!googleApiKey) {
           $(scope[i]).append('<div class="alert alert-danger" role="alert"><p><strong>Error!</strong> A valid "api-key" attribute is required. Check the <a href="#" class="alert-link">docs</a> for more info.</p></div>');
         }
-        // Iterate
+
         // Get calendar info from the Googs
         $.ajax({
           type: "GET",
@@ -98,8 +98,7 @@
             calInfo.link = response.items[0].htmlLink;
             calInfo.now = new Date();
 
-            // Update count every minute
-            // and display it
+            // Update count accourding to countInterval
             updateCountdown(calInfo);
             setInterval(function() {
               calInfo.now = calInfo.now + countInterval;
