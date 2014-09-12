@@ -62,6 +62,7 @@
         // Set up scoped vars
         var calendarId = $(scope[i]).attr('calendar-id'),
           googleApiKey = $(scope[i]).attr('api-key'),
+          valid = true,
 
           // Set up API path
           apiPath = [
@@ -76,41 +77,44 @@
         // Some bad error checking...
         if(!calendarId) {
           $(scope[i]).append('<div class="alert alert-danger" role="alert"><p><strong>Error!</strong> A valid "calendar-id" attribute is required. Check the <a href="#" class="alert-link">docs</a> for more info.</p></div>');
+          valid = false;
         }
         // Missing api key
         if(!googleApiKey) {
           $(scope[i]).append('<div class="alert alert-danger" role="alert"><p><strong>Error!</strong> A valid "api-key" attribute is required. Check the <a href="#" class="alert-link">docs</a> for more info.</p></div>');
+          valid = false;
         }
 
-        // Get calendar info from the Googs
-        $.ajax({
-          type: "GET",
-          url:  apiPath,
-          dataType: "json",
-          success: function(response) {
-            // It worked... now set up the things
-            var calInfo = {};
+        if(valid) {
+          // Get calendar info from the Googs
+          $.ajax({
+            type: "GET",
+            url:  apiPath,
+            dataType: "json",
+            success: function(response) {
+              // It worked... now set up the things
+              var calInfo = {};
 
-            calInfo.nextStream = new Date(response.items[0].start.dateTime);
-            calInfo.nextStreamEnd = new Date(response.items[0].end.dateTime);
-            calInfo.name = response.items[0].summary;
-            calInfo.location = response.items[0].location;
-            calInfo.link = response.items[0].htmlLink;
-            calInfo.now = new Date();
+              calInfo.nextStream = new Date(response.items[0].start.dateTime);
+              calInfo.nextStreamEnd = new Date(response.items[0].end.dateTime);
+              calInfo.name = response.items[0].summary;
+              calInfo.location = response.items[0].location;
+              calInfo.link = response.items[0].htmlLink;
+              calInfo.now = new Date();
 
-            // Update count accourding to countInterval
-            updateCountdown(calInfo);
-            setInterval(function() {
-              calInfo.now = calInfo.now + countInterval;
+              // Update count accourding to countInterval
               updateCountdown(calInfo);
-            }, countInterval );
-          },
-          error: function(response) {
-            // It didn't work. Stinks.
-            $(scope[i]).prepend('<h2>Shoot, looks like something went wrong...</h2>');
-          }
-        }); // end ajax call
-        i++;
+              setInterval(function() {
+                calInfo.now = calInfo.now + countInterval;
+                updateCountdown(calInfo);
+              }, countInterval );
+            },
+            error: function(response) {
+              // It didn't work. Stinks.
+              $(scope[i]).prepend('<h2>Shoot, looks like something went wrong...</h2>');
+            }
+          }); // end ajax call
+        } // end if(valid)
       }); // End scope.each
     }
   }
