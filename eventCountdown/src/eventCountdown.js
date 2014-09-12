@@ -43,7 +43,8 @@
 
 // Lets get this party started
 (function(){
-  var countInterval = 6e4; // 1 minute
+  // var countInterval = 6e4; // 1 minute
+  var countInterval = 1e3; // 1 second
 
   // When the DOM is ready to party
   $(document).ready(function() {
