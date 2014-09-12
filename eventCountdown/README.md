@@ -1,4 +1,4 @@
-Event Calendar
+Event Countdown
 =============
 
 The event calendar grabs event info from a google calendar and displays a pretty "time-ago" style countdown timer.
