@@ -53,13 +53,12 @@
 
   function getEventDetails() {
     var curTime = new Date().toISOString(),
-      i = 0,
       scope = $('[event-countdown]');
 
     // Make sure they are using the "event-calendar"
     // element somewhere on the page.
     if(scope.length > 0) {
-      scope.each(function() {
+      scope.each(function(i) {
         // Set up scoped vars
         var calendarId = $(scope[i]).attr('calendar-id'),
         googleApiKey = $(scope[i]).attr('api-key'),
@@ -76,11 +75,11 @@
 
         // Some bad error checking...
         if(!calendarId) {
-          $(scope[i]).append('<div class="alert alert-danger" role="alert"> <p><strong>Error!</strong> A valid "calendar-id" attribute is required. Check the <a href="#" class="alert-link">docs</a> for more info.<p></div>');
+          $(scope[i]).append('<div class="alert alert-danger" role="alert"><p><strong>Error!</strong> A valid "calendar-id" attribute is required. Check the <a href="#" class="alert-link">docs</a> for more info.</p></div>');
         }
         // Missing api key
         if(!googleApiKey) {
-          $(scope[i]).append('<div class="alert alert-danger" role="alert"> <p><strong>Error!</strong> A valid "api-key" attribute is required. Check the <a href="#" class="alert-link">docs</a> for more info.<p></div>');
+          $(scope[i]).append('<div class="alert alert-danger" role="alert"><p><strong>Error!</strong> A valid "api-key" attribute is required. Check the <a href="#" class="alert-link">docs</a> for more info.</p></div>');
         }
         // Iterate
         // Get calendar info from the Googs
