@@ -12,7 +12,7 @@
 
 /**
  * @eventCountdown method
- * @param {string} googleId
+ * @param {string} calendarId
  * @param {string} googleApiKey
  * @description
  *
@@ -52,49 +52,68 @@
 
   function getEventDetails() {
     var curTime = new Date().toISOString(),
-      scope = $('[event-countdown]'),
-      calendarId = scope.attr('calendar-id'),
-      apiKey = scope.attr('api-key'),
+      i = 0,
+      scope = $('[event-countdown]');
 
-      // Set up API path
-      apiPath = [
-        "https://www.googleapis.com/calendar/v3/calendars/unitedpursuit.com",
-        calendarId,
-        "%40group.calendar.google.com/events?orderBy=startTime&singleEvents=true&timeMin=",
-        curTime,
-        "&key=",
-        apiKey
-      ].join("\n");
+    // Make sure they are using the "event-calendar"
+    // element somewhere on the page.
+    if(scope.length > 0) {
+      scope.each(function() {
+        // Set up scoped vars
+        var calendarId = $(scope[i]).attr('calendar-id'),
+        googleApiKey = $(scope[i]).attr('api-key'),
 
-    // Get calendar info from the Googs
-    $.ajax({
-      type: "GET",
-      url:  apiPath,
-      dataType: "json",
-      success: function(response) {
-        // It worked... now set up the things
-        var calInfo = {};
+        // Set up API path
+        apiPath = [
+          "https://www.googleapis.com/calendar/v3/calendars/unitedpursuit.com",
+          calendarId,
+          "%40group.calendar.google.com/events?orderBy=startTime&singleEvents=true&timeMin=",
+          curTime,
+          "&key=",
+          googleApiKey
+        ].join("\n");
 
-        calInfo.nextStream = new Date(response.items[0].start.dateTime);
-        calInfo.nextStreamEnd = new Date(response.items[0].end.dateTime);
-        calInfo.name = response.items[0].summary;
-        calInfo.location = response.items[0].location;
-        calInfo.link = response.items[0].htmlLink;
-        calInfo.now = new Date();
+        // Some bad error checking...
+        if(!calendarId) {
+          $(scope[i]).append('<div class="alert alert-danger" role="alert"> <p><strong>Error!</strong> A valid "calendar-id" attribute is required. Check the <a href="#" class="alert-link">docs</a> for more info.<p></div>');
+        }
+        // Missing api key
+        if(!googleApiKey) {
+          $(scope[i]).append('<div class="alert alert-danger" role="alert"> <p><strong>Error!</strong> A valid "api-key" attribute is required. Check the <a href="#" class="alert-link">docs</a> for more info.<p></div>');
+        }
+        // Iterate
+        // Get calendar info from the Googs
+        $.ajax({
+          type: "GET",
+          url:  apiPath,
+          dataType: "json",
+          success: function(response) {
+            // It worked... now set up the things
+            var calInfo = {};
 
-        // Update count every minute
-        // and display it
-        updateCountdown(calInfo);
-        setInterval(function() {
-          calInfo.now = calInfo.now + countInterval;
-          updateCountdown(calInfo);
-        }, countInterval );
-      },
-      error: function(response) {
-        // It didn't work. Stinks.
-        scope.html('Shoot, looks like something went wrong...');
-      }
-    });
+            calInfo.nextStream = new Date(response.items[0].start.dateTime);
+            calInfo.nextStreamEnd = new Date(response.items[0].end.dateTime);
+            calInfo.name = response.items[0].summary;
+            calInfo.location = response.items[0].location;
+            calInfo.link = response.items[0].htmlLink;
+            calInfo.now = new Date();
+
+            // Update count every minute
+            // and display it
+            updateCountdown(calInfo);
+            setInterval(function() {
+              calInfo.now = calInfo.now + countInterval;
+              updateCountdown(calInfo);
+            }, countInterval );
+          },
+          error: function(response) {
+            // It didn't work. Stinks.
+            $(scope[i]).prepend('<h2>Shoot, looks like something went wrong...</h2>');
+          }
+        }); // end ajax call
+        i++;
+      }); // End scope.each
+    }
   }
 
   // Takes a data object and spits out a
@@ -107,7 +126,6 @@
     $('[ec-start]').html(moment(data.nextStream).format('MMMM Do @ h:mm:ss a'));
     $('[ec-end]').html(moment(data.nextStreamEnd).format('MMMM Do @ h:mm:ss a'));
     $('[ec-now]').html(moment().format('MMMM Do @ h:mm:ss a'));
-    console.log(data.nextStream);
   };
 
 })();
